@@ -1,0 +1,44 @@
+<h1 class="well">Add a restaurant:</h1>
+
+<form action="/restaurants" method="post" class="form-horizontal">
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label">Restaurant name</label>
+    <div class="col-sm-10">
+    <input id="name" name="name" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="type" class="col-sm-2 control-label">Type of Food</label>
+    <div class="col-sm-10">
+    <input id="type" name="type" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ranking" class="col-sm-2 control-label">Ranking (1-5)</label>
+    <div class="col-sm-10">
+    <select class="form-control" name="ranking" id="ranking">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vegan" class="col-sm-2 control-label">Vegan?</label>
+    <div class="col-sm-10">
+    <input id="vegan" name="vegan" value="yes" type="radio">Yes &nbsp; &nbsp;
+    <input id="vegan" name="vegan" value="no" type="radio">No
+  </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit" class="btn btn-success">Add Restaurant</button>
+    </div>
+  </div>
+</form>

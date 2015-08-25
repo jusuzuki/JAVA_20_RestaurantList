@@ -1,0 +1,25 @@
+<h1 class="well">Restaurant list!</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Ranking</th>
+      <th>Vegan?</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach ($restaurant in $searchresults)
+    <tr>
+      <td><a href="/restaurants/$restaurant.getId()">$restaurant.getName()</a></td>
+      <td>$restaurant.getType()</td>
+      <td>$restaurant.getRanking()</td>
+      <td>$restaurant.getVegan()</td>
+    </tr>
+    #end
+  </tbody>
+</table>
+
+<hr>
+<p><a href="/">Return to Main Page</a></p>

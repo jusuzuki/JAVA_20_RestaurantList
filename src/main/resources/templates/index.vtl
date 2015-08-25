@@ -1,0 +1,51 @@
+<h1 class="well">Restaurant list!</h1>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Type</th>
+      <th>Ranking</th>
+      <th>Vegan?</th>
+    </tr>
+  </thead>
+  <tbody>
+    #foreach($restaurant in $restaurants)
+    <tr>
+      <td><a href="/restaurants/$restaurant.getId()">$restaurant.getName()</a></td>
+      <td>$restaurant.getType()</td>
+      <td>$restaurant.getRanking()</td>
+      <td>$restaurant.getVegan()</td>
+    </tr>
+    #end
+  </tbody>
+</table>
+
+
+
+<hr/>
+<div class="container">
+<br><a href="/restaurants/new">Add a New Restaurant</a></br>
+</div>
+
+<hr/>
+<h1 class="well">Search for your next meal!</h1>
+
+<form action="/searchresults" method="post">
+  <div class="form-group">
+    <label for="ranking" class="col-sm-2 control-label">Search by type</label>
+    <div class="col-sm-8">
+    <select class="form-control" name="type" id="type">
+      #foreach($type in $types)
+      <option value="$type">$type</option>
+      #end
+    </select>
+    </div>
+
+    <div class="col-sm-2">
+    <button type="submit" class="btn btn-success">Search</button>
+    </div>
+  </div>
+
+</form>

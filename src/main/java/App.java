@@ -87,6 +87,10 @@ public class App {
       int restaurantId = Integer.parseInt(request.params(":id"));
       Restaurant restaurant = Restaurant.find(restaurantId);
 
+      // get reviews by restaurant id
+      List<String> listreviews = Review.listReviews(restaurantId);
+      model.put("listreviews", listreviews);
+
 
       model.put("restaurant", restaurant);
       model.put("template", "templates/restaurant.vtl");

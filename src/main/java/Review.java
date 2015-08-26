@@ -2,7 +2,7 @@ import java.util.List;
 import org.sql2o.*;
 
 public class Review {
-
+  private int id;//why? don't know
   private String review_description;
   private Integer ranking;
   private Integer reviewer_id;
@@ -37,12 +37,22 @@ public class Review {
     return restaurant_id;
   }
 
-  public static List<String> listReviews(Integer restaurant_id){
+  public static String getReviewer(Integer input_id){
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT review_description FROM reviews WHERE restaurant_id=:restaurant_id";
-      List<String> reviews = con.createQuery(sql)
+      String sql = "SELECT DISTINCT user_name FROM reviews JOIN users ON (users.id = reviews.reviewer_id) WHERE reviews.reviewer_id =:input_id";
+      String reviewer = con.createQuery(sql)
+        .addParameter("input_id", input_id)
+        .executeAndFetchFirst(String.class);
+        return reviewer;
+      }
+  }
+
+  public static List<Review> listReviews(Integer restaurant_id){
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id";
+      List<Review> reviews = con.createQuery(sql)
         .addParameter("restaurant_id", restaurant_id)
-        .executeAndFetch(String.class);
+        .executeAndFetch(Review.class);
         return reviews;
       }
   }

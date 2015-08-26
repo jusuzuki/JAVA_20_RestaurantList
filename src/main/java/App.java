@@ -88,8 +88,12 @@ public class App {
       Restaurant restaurant = Restaurant.find(restaurantId);
 
       // get reviews by restaurant id
-      List<String> listreviews = Review.listReviews(restaurantId);
+      List<Review> listreviews = Review.listReviews(restaurantId);
       model.put("listreviews", listreviews);
+
+      // get reviewer by user id
+      String reviewer = Review.getReviewer(1);
+      model.put("reviewer", reviewer);
 
 
       model.put("restaurant", restaurant);

@@ -15,11 +15,13 @@
   </tr>
 </table>
 <hr>
-<h2>REVIEWS</h2>
+<h2>REVIEWS for $restaurant.getName()</h2>
+<ul>
 #foreach ($review in $listreviews)
-$review
+Review by: $reviewer on $review.getReviewDate() Ranking: $review.getRanking()
+  <li>$review.getDescription()</li>
 #end
-
+</ul>
 <hr>
 <p><a href="/">Return to Main Page</a></p>
 <p><span class="glyphicon glyphicon-trash"><a href="/restaurants/$restaurant.getId()/removerestaurant"></span>&nbsp;Delete this restaurant</a></p>

@@ -2,24 +2,47 @@
 
 <table class="table table-striped">
   <thead>
-    <tr>
+    <tr class="small">
       <th>Name</th>
       <th>Type</th>
       <th>Ranking</th>
-      <th>Vegan?</th>
+      <th>Vegan Options</th>
+      <th>Price Range</th>
+      <th>Area</th>
     </tr>
   </thead>
   <tbody>
-    #foreach ($restaurant in $searchresults)
+    #foreach($restaurant in $searchresults)
     <tr>
       <td><a href="/restaurants/$restaurant.getId()">$restaurant.getName()</a></td>
       <td>$restaurant.getType()</td>
-      <td>$restaurant.getRanking()</td>
+      <td class="small">$restaurant.rankingStars($restaurant.getRankingAverage())</td>
       <td>$restaurant.getVegan()</td>
+      <td>$restaurant.getPriceRange()</td>
+      <td>$restaurant.getArea()</td>
     </tr>
     #end
   </tbody>
 </table>
+<hr/>
+<h1 class="well">Search for your next meal!</h1>
 
+<form action="/searchresults" method="post">
+  <div class="form-group">
+    <label for="searchtype" class="col-sm-2 control-label">Search by type</label>
+    <div class="col-sm-8">
+    <select class="form-control" name="type" id="type">
+      #foreach($type in $types)
+      <option value="$type">$type</option>
+      #end
+    </select>
+    </div>
+
+    <div class="col-sm-2">
+    <button type="submit" class="btn btn-success">Search</button>
+    </div>
+  </div>
+
+</form>
 <hr>
 <p><a href="/">Return to Main Page</a></p>

@@ -14,37 +14,37 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
-    //homepage with form to add restaurant
+    //homepage with a list of all the restaurants
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
 
       List<Restaurant> restaurants = Restaurant.all();
 
-      List<String> something = Restaurant.dupTypes();
-      List<String> types = Restaurant.removeDups(something);
+      List<String> types = Restaurant.listTypes();
+
       model.put("restaurants",restaurants);
       model.put("types",types);
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-
-
-    //list of restaurants, option to create new restaurants
-    get("/restaurants", (request, response) -> {
-      HashMap<String, Object> model = new HashMap<String, Object>();
-
-      List<Restaurant> restaurants = Restaurant.all();
-
-      List<String> something = Restaurant.dupTypes();
-      List<String> types = Restaurant.removeDups(something);
-      model.put("restaurants",restaurants);
-      model.put("types",types);
-
-      model.put("template", "templates/index.vtl");
-      return new ModelAndView(model, layout);
-    }, new VelocityTemplateEngine());
-
-
+  //
+  //
+  //   //list of restaurants, option to create new restaurants
+  //   get("/restaurants", (request, response) -> {
+  //     HashMap<String, Object> model = new HashMap<String, Object>();
+  //
+  //     List<Restaurant> restaurants = Restaurant.all();
+  //
+  //     List<String> something = Restaurant.dupTypes();
+  //     List<String> types = Restaurant.removeDups(something);
+  //     model.put("restaurants",restaurants);
+  //     model.put("types",types);
+  //
+  //     model.put("template", "templates/index.vtl");
+  //     return new ModelAndView(model, layout);
+  //   }, new VelocityTemplateEngine());
+  //
+  //
     //form to add new restaurant (same?)
     get("/restaurants/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -60,17 +60,20 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("name");
       String type = request.queryParams("type");
-      int ranking = Integer.parseInt(request.queryParams("ranking"));
+      int ranking_average = Integer.parseInt(request.queryParams("ranking_average"));
       String veganString = request.queryParams("vegan");
       boolean vegan = veganString.equals("yes");
+      String price_range = request.queryParams("price_range");
+      String area = request.queryParams("area");
+      String address = request.queryParams("address");
+      String phone = request.queryParams("phone");
+      String website = request.queryParams("website");
 
-      Restaurant newRestaurant = new Restaurant(name,type,ranking,vegan);
+      Restaurant newRestaurant = new Restaurant(name,type,ranking_average,vegan, price_range, area, address, phone, website);
       newRestaurant.save();
 
       List<Restaurant> restaurants = Restaurant.all();
-
-      List<String> something = Restaurant.dupTypes();
-      List<String> types = Restaurant.removeDups(something);
+      List<String> types = Restaurant.listTypes();
       model.put("restaurants",restaurants);
       model.put("types",types);
       model.put("template", "templates/index.vtl");
@@ -97,27 +100,24 @@ public class App {
       int restaurantId = Integer.parseInt(request.params(":id"));
       Restaurant.removeRestaurant(restaurantId);
       List<Restaurant> restaurants = Restaurant.all();
-
-      List<String> something = Restaurant.dupTypes();
-      List<String> types = Restaurant.removeDups(something);
       model.put("restaurants",restaurants);
-      model.put("types",types);
       model.put("template","templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-
+  //
 
     //search restaurant by type
     post("/searchresults", (request,response) -> {
       HashMap<String,Object> model = new HashMap<String,Object>();
       String searchtype = request.queryParams("type");
       List<Restaurant> searchresults = Restaurant.findType(searchtype);
-
+      List<String> types = Restaurant.listTypes();
+      model.put("types",types);
       model.put("searchresults", searchresults);
       model.put("template","templates/searchresults.vtl");
 
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 
-  }
+ }
 }

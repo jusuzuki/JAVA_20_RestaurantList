@@ -112,7 +112,6 @@ public class App {
       model.put("template","templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-  //
 
     //search restaurant by type
     post("/searchresults", (request,response) -> {
@@ -124,6 +123,31 @@ public class App {
       model.put("searchresults", searchresults);
       model.put("template","templates/searchresults.vtl");
 
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    // //add review to restaurant
+    post("/restaurants/:id", (request,response) -> { //This section does not work! :(
+       HashMap<String,Object> model = new HashMap<String,Object>();
+       int restaurantId = Integer.parseInt(request.queryParams("restaurantId"));
+       Restaurant restaurant = Restaurant.find(restaurantId);
+       String review_description = request.queryParams("review_description");
+       Integer ranking = Integer.parseInt(request.queryParams("ranking"));
+       String review_date = request.queryParams("review_date");
+       Integer reviewer_id = 1; //fix this
+
+       Review newReview = new Review(review_description, ranking, reviewer_id, review_date, restaurantId);
+       newReview.save();
+
+       // get reviews by restaurant id
+       List<Review> listreviews = Review.listReviews(restaurantId);
+       model.put("listreviews", listreviews);
+
+       // get reviewer by user id
+       String reviewer = Review.getReviewer(1);
+       model.put("reviewer", reviewer);
+
+      model.put("template","templates/restaurant.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
 

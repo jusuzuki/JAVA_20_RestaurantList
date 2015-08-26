@@ -47,6 +47,20 @@ public class Review {
       }
   }
 
+  public void save() {
+  try(Connection con = DB.sql2o.open()) {
+    String sql = "INSERT INTO reviews (review_description, ranking, reviewer_id, review_date, restaurant_id) VALUES (:review_description, :ranking, :reviewer_id, :review_date, :restaurant_id)";
+    this.id = (int) con.createQuery(sql, true)
+      .addParameter("review_description", review_description)
+      .addParameter("ranking", ranking)
+      .addParameter("reviewer_id", reviewer_id)
+      .addParameter("review_date", review_date)
+      .addParameter("restaurant_id", restaurant_id)
+      .executeUpdate()
+      .getKey();
+    }
+  }
+
   public static List<Review> listReviews(Integer restaurant_id){
     try(Connection con = DB.sql2o.open()) {
       String sql = "SELECT * FROM reviews WHERE restaurant_id=:restaurant_id";

@@ -2,7 +2,7 @@
 
 ##### A Yelp clone that allows users to rate and review restaurants, as well as search for them.  08/27/2015
 
-#### By Juliana Suzuki, Perry Eising and Daryl Seaver}
+#### By Juliana Suzuki, Perry Eising and Daryl Seaver
 
 ## Description
 

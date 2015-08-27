@@ -21,7 +21,7 @@
 <h2>REVIEWS for $restaurant.getName()</h2>
 <ul>
 #foreach ($review in $listreviews)
-Review by: $reviewer on $review.getReviewDate() Ranking: $restaurant.rankingStars($review.getRanking())
+Review by: $review.getReviewer on $review.getReviewDate() Ranking: $restaurant.rankingStars($review.getRanking())
   <li>$review.getDescription()</li>
 #end
 </ul>

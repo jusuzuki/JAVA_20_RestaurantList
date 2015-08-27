@@ -58,7 +58,6 @@ public class App {
       HashMap<String, Object> model = new HashMap<String, Object>();
       String name = request.queryParams("name");
       String type = request.queryParams("type");
-      int ranking_average = Integer.parseInt(request.queryParams("ranking_average"));
       String veganString = request.queryParams("vegan");
       boolean vegan = veganString.equals("yes");
       String price_range = request.queryParams("price_range");
@@ -66,6 +65,7 @@ public class App {
       String address = request.queryParams("address");
       String phone = request.queryParams("phone");
       String website = request.queryParams("website");
+      int ranking_average = Integer.parseInt(request.queryParams("ranking_average"));
 
       Restaurant newRestaurant = new Restaurant(name,type,ranking_average,vegan, price_range, area, address, phone, website);
       newRestaurant.save();

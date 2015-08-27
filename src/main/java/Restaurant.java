@@ -149,23 +149,52 @@ public class Restaurant {
   // calculate average
   public static Integer getAllRankings(int id){
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT ranking FROM reviews WHERE restaurant_id =:id";
-      List<Integer> listRankings = con.createQuery(sql)
+      String sql = "SELECT avg(ranking) FROM reviews WHERE restaurant_id =:id";
+      Float avgRankings = con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetch(Integer.class);
+        .executeAndFetchFirst(Float.class); //use "first" when not a list!
 
-          Integer sum = 0;
-          Integer size = listRankings.size();
-          for (Integer listranking : listRankings){
-            sum = sum + listranking;
-          }
+        if (avgRankings != null){
+        System.out.println(avgRankings);
+          return Math.round(avgRankings);
+        }
+        else {
+          System.out.println("else: " + avgRankings);
+          return 3;
+        }
+        } // try
 
-          Integer result = sum / size;
-          return result;
       }
 
 
-  }
+
+
+      // calculate average
+      // public static Integer getAllRankings(int id){
+      //   try(Connection con = DB.sql2o.open()) {
+      //     String sql = "SELECT ranking FROM reviews WHERE restaurant_id =:id";
+      //     List<Integer> listRankings = con.createQuery(sql)
+      //       .addParameter("id", id)
+      //       .executeAndFetch(Integer.class);
+      //
+      //       if (listRankings != 0) {
+      //
+      //           Integer sum = 0;
+      //           Integer size = listRankings.size();
+      //           for (Integer listranking : listRankings){
+      //             sum = sum + listranking;
+      //           }
+      //
+      //           Integer result = sum / size;
+      //           return result;
+      //       }
+      //       else {
+      //         return 3;
+      //       }
+      //
+      //     } // try
+
+ // method
 
   // public static float calculateAverage(List<Integer> listRankings){
   //   Integer sum = 0;

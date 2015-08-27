@@ -129,8 +129,11 @@ public class App {
     // //add review to restaurant
     post("/restaurants/:id", (request,response) -> { //This section does not work! :(
        HashMap<String,Object> model = new HashMap<String,Object>();
-       int restaurantId = Integer.parseInt(request.queryParams("restaurantId"));
+       int restaurantId = Integer.parseInt(request.params(":id"));
+
        Restaurant restaurant = Restaurant.find(restaurantId);
+
+
        String review_description = request.queryParams("review_description");
        Integer ranking = Integer.parseInt(request.queryParams("ranking"));
        String review_date = request.queryParams("review_date");
@@ -142,6 +145,10 @@ public class App {
        // get reviews by restaurant id
        List<Review> listreviews = Review.listReviews(restaurantId);
        model.put("listreviews", listreviews);
+
+
+       //add restaurant to model
+       model.put("restaurant", restaurant);
 
        // get reviewer by user id
        String reviewer = Review.getReviewer(1);

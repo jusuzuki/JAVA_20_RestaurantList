@@ -29,12 +29,10 @@ public class App {
         model.put("username", inputtedUsername);
         User newUser = new User(inputtedUsername, "123");
 
-        if (newUser.checkExistingUser(inputtedUsername) == true){
-          Integer userId = newUser.getId();
-          request.session().attribute("userId");
+        if (newUser.checkExistingUser(inputtedUsername) != null){
+          Integer userId = newUser.checkExistingUser(inputtedUsername);
+          request.session().attribute("userId", userId);
         }
-
-
         else{
         newUser.save();
         Integer userId = newUser.getId();

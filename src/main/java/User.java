@@ -23,19 +23,18 @@ public class User {
     return id;
   }
 
-  public boolean checkExistingUser(String inputtedUsername){
+  public Integer checkExistingUser(String inputtedUsername){
     try(Connection con = DB.sql2o.open()) {
-      String sql = "SELECT user_name FROM users WHERE user_name = :inputtedUsername";
-      String userExists  = con.createQuery(sql)
+      String sql = "SELECT id FROM users WHERE user_name = :inputtedUsername";
+      Integer userIdExists  = con.createQuery(sql)
         .addParameter("inputtedUsername",inputtedUsername)
-        .executeAndFetchFirst(String.class); //multiple?
-
-        if(userExists != null){
-          return true;
+        .executeAndFetchFirst(Integer.class); //multiple?
+        if(userIdExists != null){
+          return userIdExists;
         }
 
         else{
-          return false;
+          return null;
         }
 
       } //try

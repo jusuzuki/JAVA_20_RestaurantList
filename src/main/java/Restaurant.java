@@ -155,56 +155,13 @@ public class Restaurant {
         .executeAndFetchFirst(Float.class); //use "first" when not a list!
 
         if (avgRankings != null){
-        System.out.println(avgRankings);
           return Math.round(avgRankings);
         }
         else {
-          System.out.println("else: " + avgRankings);
           return 3;
-        }
-        } // try
+          }
+      } // try
 
-      }
-
-
-
-
-      // calculate average
-      // public static Integer getAllRankings(int id){
-      //   try(Connection con = DB.sql2o.open()) {
-      //     String sql = "SELECT ranking FROM reviews WHERE restaurant_id =:id";
-      //     List<Integer> listRankings = con.createQuery(sql)
-      //       .addParameter("id", id)
-      //       .executeAndFetch(Integer.class);
-      //
-      //       if (listRankings != 0) {
-      //
-      //           Integer sum = 0;
-      //           Integer size = listRankings.size();
-      //           for (Integer listranking : listRankings){
-      //             sum = sum + listranking;
-      //           }
-      //
-      //           Integer result = sum / size;
-      //           return result;
-      //       }
-      //       else {
-      //         return 3;
-      //       }
-      //
-      //     } // try
-
- // method
-
-  // public static float calculateAverage(List<Integer> listRankings){
-  //   Integer sum = 0;
-  //   for (Integer listranking : listRankings){
-  //     sum = sum + listranking;
-  //   }
-  //   System.out.println("sum: " + sum);
-  //   System.out.println("listrankings size: " + listRankings.size());
-  //   return sum / listRankings.size();
-  // }
-
+    }
 
 }

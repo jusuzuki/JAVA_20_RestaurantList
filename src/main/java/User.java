@@ -23,6 +23,24 @@ public class User {
     return id;
   }
 
+  public boolean checkExistingUser(String inputtedUsername){
+    try(Connection con = DB.sql2o.open()) {
+      String sql = "SELECT user_name FROM users WHERE user_name = :inputtedUsername";
+      String userExists  = con.createQuery(sql)
+        .addParameter("inputtedUsername",inputtedUsername)
+        .executeAndFetchFirst(String.class); //multiple?
+
+        if(userExists != null){
+          return true;
+        }
+
+        else{
+          return false;
+        }
+
+      } //try
+  }
+
   public void save() {
   try(Connection con = DB.sql2o.open()) {
     String sql = "INSERT INTO users (user_name, user_password) VALUES (:user_name, :user_password)";

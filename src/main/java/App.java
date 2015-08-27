@@ -24,13 +24,22 @@ public class App {
 
       //check for not-null username
       if (inputtedUsername != null){
+
         request.session().attribute("username", inputtedUsername);
         model.put("username", inputtedUsername);
-
         User newUser = new User(inputtedUsername, "123");
+
+        if (newUser.checkExistingUser(inputtedUsername) == true){
+          Integer userId = newUser.getId();
+          request.session().attribute("userId");
+        }
+
+
+        else{
         newUser.save();
         Integer userId = newUser.getId();
         request.session().attribute("userId", userId);
+        }
       }
 
       List<Restaurant> restaurants = Restaurant.all();
@@ -134,12 +143,16 @@ public class App {
 
        //get the username from the session
        model.put("username", request.session().attribute("username"));
+       Integer reviewer_id = request.session().attribute("userId");// doesn't need two arguments because we are just retrieving!
 
+       // get reviewer by user id
+       String reviewer = Review.getReviewer(reviewer_id);
+       model.put("reviewer", reviewer);
+
+       //post new review
        String review_description = request.queryParams("review_description");
        Integer ranking = Integer.parseInt(request.queryParams("ranking"));
        String review_date = request.queryParams("review_date");
-
-       Integer reviewer_id = request.session().attribute("userId");// doesn't need two arguments because we are just retrieving!
 
        Review newReview = new Review(review_description, ranking, reviewer_id, review_date, restaurantId);
        newReview.save();
@@ -148,13 +161,9 @@ public class App {
        List<Review> listreviews = Review.listReviews(restaurantId);
        model.put("listreviews", listreviews);
 
-
        //add restaurant to model
        model.put("restaurant", restaurant);
 
-       // get reviewer by user id
-       String reviewer = Review.getReviewer(reviewer_id);
-       model.put("reviewer", reviewer);
 
       model.put("template","templates/restaurant.vtl");
       return new ModelAndView(model, layout);

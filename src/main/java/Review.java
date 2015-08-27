@@ -47,6 +47,7 @@ public class Review {
       }
   }
 
+
   public void save() {
   try(Connection con = DB.sql2o.open()) {
     String sql = "INSERT INTO reviews (review_description, ranking, reviewer_id, review_date, restaurant_id) VALUES (:review_description, :ranking, :reviewer_id, :review_date, :restaurant_id)";

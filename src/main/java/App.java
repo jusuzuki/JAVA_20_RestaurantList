@@ -14,9 +14,24 @@ public class App {
     staticFileLocation("/public");
     String layout = "templates/layout.vtl";
 
+
     //homepage with a list of all the restaurants
     get("/", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
+
+      //start session
+      String inputtedUsername = request.queryParams("username");
+
+      //check for not-null username
+      if (inputtedUsername != null){
+        request.session().attribute("username", inputtedUsername);
+        model.put("username", inputtedUsername);
+
+        User newUser = new User(inputtedUsername, "123");
+        newUser.save();
+        Integer userId = newUser.getId();
+        request.session().attribute("userId", userId);
+      }
 
       List<Restaurant> restaurants = Restaurant.all();
 
@@ -27,24 +42,7 @@ public class App {
       model.put("template", "templates/index.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
-  //
-  //
-  //   //list of restaurants, option to create new restaurants
-  //   get("/restaurants", (request, response) -> {
-  //     HashMap<String, Object> model = new HashMap<String, Object>();
-  //
-  //     List<Restaurant> restaurants = Restaurant.all();
-  //
-  //     List<String> something = Restaurant.dupTypes();
-  //     List<String> types = Restaurant.removeDups(something);
-  //     model.put("restaurants",restaurants);
-  //     model.put("types",types);
-  //
-  //     model.put("template", "templates/index.vtl");
-  //     return new ModelAndView(model, layout);
-  //   }, new VelocityTemplateEngine());
-  //
-  //
+
     //form to add new restaurant (same?)
     get("/restaurants/new", (request, response) -> {
       HashMap<String, Object> model = new HashMap<String, Object>();
@@ -87,14 +85,15 @@ public class App {
       int restaurantId = Integer.parseInt(request.params(":id"));
       Restaurant restaurant = Restaurant.find(restaurantId);
 
+      //get the username from the session
+      model.put("username", request.session().attribute("username"));
+      Integer reviewer_id = request.session().attribute("userId");// doesn't need two arguments because we are just retrieving!
+      String reviewer = Review.getReviewer(reviewer_id);
+      model.put("reviewer", reviewer);
+
       // get reviews by restaurant id
       List<Review> listreviews = Review.listReviews(restaurantId);
       model.put("listreviews", listreviews);
-
-      // get reviewer by user id
-      String reviewer = Review.getReviewer(1);
-      model.put("reviewer", reviewer);
-
 
       model.put("restaurant", restaurant);
       model.put("template", "templates/restaurant.vtl");
@@ -133,11 +132,14 @@ public class App {
 
        Restaurant restaurant = Restaurant.find(restaurantId);
 
+       //get the username from the session
+       model.put("username", request.session().attribute("username"));
 
        String review_description = request.queryParams("review_description");
        Integer ranking = Integer.parseInt(request.queryParams("ranking"));
        String review_date = request.queryParams("review_date");
-       Integer reviewer_id = 1; //fix this
+
+       Integer reviewer_id = request.session().attribute("userId");// doesn't need two arguments because we are just retrieving!
 
        Review newReview = new Review(review_description, ranking, reviewer_id, review_date, restaurantId);
        newReview.save();
@@ -151,7 +153,7 @@ public class App {
        model.put("restaurant", restaurant);
 
        // get reviewer by user id
-       String reviewer = Review.getReviewer(1);
+       String reviewer = Review.getReviewer(reviewer_id);
        model.put("reviewer", reviewer);
 
       model.put("template","templates/restaurant.vtl");

@@ -1,0 +1,90 @@
+<h1 class="well">Add a restaurant:</h1>
+
+<form action="/restaurants" method="post" class="form-horizontal">
+  <div class="form-group">
+    <label for="name" class="col-sm-2 control-label">Restaurant name</label>
+    <div class="col-sm-10">
+    <input id="name" name="name" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="type" class="col-sm-2 control-label">Type of Food</label>
+    <div class="col-sm-10">
+    <input id="type" name="type" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ranking" class="col-sm-2 control-label">Ranking (1-5)</label>
+    <div class="col-sm-4">
+    <select class="col-sm-4 control-label" name="ranking_average" id="ranking_average">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+      <option value="4">4</option>
+      <option value="5">5</option>
+    </select>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="vegan" class="col-sm-2 control-label">Vegan Options?</label>
+    <div class="col-sm-10">
+    <input id="vegan" name="vegan" value="yes" type="radio">Yes &nbsp; &nbsp;
+    <input id="vegan" name="vegan" value="no" type="radio" checked="checked">No
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="price_range" class="col-sm-2 control-label">Price Range</label>
+    <div class="col-sm-4">
+    <select class="col-sm-4 control-label" name="price_range" id="price_range">
+      <option value="$">$</option>
+      <option value="$$">$$</option>
+      <option value="$$$">$$$</option>
+      <option value="$$$$">$$$$</option>
+    </select>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="area" class="col-sm-2 control-label">Area</label>
+    <div class="col-sm-4">
+    <select class="col-sm-4 control-label" name="area" id="area">
+      <option value="NE">NE</option>
+      <option value="SE">SE</option>
+      <option value="NW">NW</option>
+      <option value="SW">SW</option>
+      <option value="N">N</option>
+    </select>
+  </div>
+  </div>
+
+  <div class="form-group">
+    <label for="address" class="col-sm-2 control-label">Address</label>
+    <div class="col-sm-10">
+    <input id="address" name="address" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="phone" class="col-sm-2 control-label">Phone</label>
+    <div class="col-sm-10">
+    <input id="phone" name="phone" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="website" class="col-sm-2 control-label">Website</label>
+    <div class="col-sm-10">
+    <input id="website" name="website" type="text">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+    <button type="submit" class="btn btn-success">Add Restaurant</button>
+    </div>
+  </div>
+</form>

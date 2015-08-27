@@ -10,7 +10,7 @@
   <tr>
     <td>$restaurant.getName()</td>
     <td>$restaurant.getType()</td>
-    <td>$restaurant.rankingStars($restaurant.getRankingAverage())</td>
+    <td>$restaurant.rankingStars($restaurant.getAllRankings($restaurant.getId()))</td>
     <td>$restaurant.getVegan()</td>
   </tr>
 </table>
@@ -21,7 +21,7 @@
 <h2>REVIEWS for $restaurant.getName()</h2>
 <ul>
 #foreach ($review in $listreviews)
-Review by: $reviewer on $review.getReviewDate() Ranking: $review.getRanking()
+Review by: $reviewer on $review.getReviewDate() Ranking: $restaurant.rankingStars($review.getRanking())
   <li>$review.getDescription()</li>
 #end
 </ul>
@@ -33,7 +33,7 @@ Review by: $reviewer on $review.getReviewDate() Ranking: $review.getRanking()
   <div class="form-group">
     <label for="username" class="col-sm-2 control-label">User name:</label>
     <div class="col-sm-10">
-    <input id="username" name="username" type="text">
+    <input id="username" name="username" type="text" value="$username" readonly="readonly">
     </div>
   </div>
 
